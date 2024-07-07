@@ -22,7 +22,7 @@ user_router = APIRouter(tags=["Users"])
 
 
 @user_router.post(
-    "/user/signup",
+    "/user/signup/",
     response_model=ResponseModel,
     status_code=status.HTTP_201_CREATED,
 )
@@ -49,7 +49,7 @@ async def signup_user(user_data: UserSignup, session=Depends(get_session)) -> di
         )
 
 
-@user_router.post("/user/signin", response_model=TokenResponse)
+@user_router.post("/user/signin/", response_model=TokenResponse)
 async def singin_user(user_data: UserSignin, session=Depends(get_session)) -> dict:
 
     # authenticate user with password via firebase
@@ -72,7 +72,7 @@ async def singin_user(user_data: UserSignin, session=Depends(get_session)) -> di
         raise HTTPException(status_code=400, detail="Invalid password.")
 
 
-@user_router.get("/user/get", response_model=ResponseOneUser)
+@user_router.get("/user/get/", response_model=ResponseOneUser)
 async def retrieve_user(
     user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),

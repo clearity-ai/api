@@ -29,7 +29,7 @@ storage_bucket = os.getenv("STORAGE_BUCKET")
 
 
 @ai_router.post(
-    "/ai/segment",
+    "/ai/segment/",
     response_model=ResponseModel,
     status_code=status.HTTP_201_CREATED,
 )

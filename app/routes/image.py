@@ -24,7 +24,7 @@ storage_bucket = os.getenv("STORAGE_BUCKET")
 
 
 @image_router.post(
-    "/image/create",
+    "/image/create/",
     response_model=ResponseModel,
     status_code=status.HTTP_201_CREATED,
 )
@@ -70,7 +70,9 @@ async def upload_image(
 
 
 @image_router.get(
-    "/image/retrieve", response_model=ResponseModel, status_code=status.HTTP_201_CREATED
+    "/image/retrieve/",
+    response_model=ResponseModel,
+    status_code=status.HTTP_201_CREATED,
 )
 async def retrieve_experiment_images(
     experiment_id: int,
@@ -97,7 +99,7 @@ async def retrieve_experiment_images(
     return {"message": "Experiment image paths successfully retrieved!", "data": data}
 
 
-@image_router.put("/image/delete/{image_id}")
+@image_router.put("/image/delete/{image_id}/")
 async def delete_image(
     image_id: int = Path(..., title="ID of image to delete."),
     user_id=Depends(authenticate_user_credentials),

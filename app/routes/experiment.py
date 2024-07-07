@@ -86,7 +86,7 @@ async def get_all_experiments_for_user(
 
 
 @experiment_router.post(
-    "/experiment/create",
+    "/experiment/create/",
     response_model=ResponseModel,
     status_code=status.HTTP_201_CREATED,
 )
@@ -168,7 +168,7 @@ async def create_experiment(
     return {"message": "Experiment succesfully started!"}
 
 
-@experiment_router.put("/experiment/end", response_model=ResponseModel)
+@experiment_router.put("/experiment/end/", response_model=ResponseModel)
 async def end_experiment(
     experiment_id: int,
     user_firebase_id: str = Depends(authenticate_user_credentials),
@@ -193,7 +193,7 @@ async def end_experiment(
     return {"message": "Experiment ended successfully!"}
 
 
-@experiment_router.put("/experiment/remove", response_model=ResponseModel)
+@experiment_router.put("/experiment/remove/", response_model=ResponseModel)
 async def remove_experiment(
     experiment_id: int,
     user_firebase_id: str = Depends(authenticate_user_credentials),
