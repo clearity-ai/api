@@ -1,13 +1,14 @@
 ### GOOGLE CLOUD STORAGE DB ###
 # Where to look for the credentials within the container
 GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
-GOOGLE_CLOUD_PROJECT=acneaidapi-417914
-DB_INSTANCE_CONNECTION_NAME=acneaidapi-417914:europe-west4:acneaiddb
+GOOGLE_CLOUD_PROJECT=clearity-426711
+DB_INSTANCE_CONNECTION_NAME=clearity-426711:europe-west4:clearitydb
 DB_USER=postgres
-DB_PASSWORD=YouveNeverSeenSomethingMoreSecure1!
+# DB_PASSWORD= # Moved to gc secrets manager
 DB_NAME=main_db
 ### GOOGLE CLOUD OBJECT STORAGE###
-STORAGE_BUCKET=progress_images
+STORAGE_BUCKET=routine_selfies
 ### AUTHENTICATION ###
-FIREBASE_SERVICE_ACCOUNT_KEY_FILE=../tmp/keys/firebase_private_key.json
-FIREBASE_CONFIG_FILE=/tmp/configs/firebase_config.json
+# With firebase, relavent files moved to gc secrets manager
+# FIREBASE_CONFIG_FILE = ...
+# FIREBASE_SERVICE_ACCOUNT_KEY_FILE = ...

@@ -19,11 +19,5 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 # Copy the application code into the container at /code/app/
 COPY ./app /code/app
 
-# Copy firebase private key json file
-COPY ./keys/firebase_private_key.json /tmp/keys/firebase_private_key.json
-
-# Copy the configuration files
-COPY ./configs /tmp/configs
-
 # Run the application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

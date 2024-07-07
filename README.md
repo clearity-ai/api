@@ -4,7 +4,7 @@
 
 [1] - Copy env-file_template file, fill in, then save as "env-file"
 
-[2] - Make sure firebase_private_key.json file is in ./keys. Generate from firebase if necessary
+[2] - Make sure firebase_private_key.json file, firebase_config.json file and DB_PASSWORD are in https://console.cloud.google.com/security/secret-manager. Generate from firebase if necessary
 
 [3] - Make sure docker daemon is running
 

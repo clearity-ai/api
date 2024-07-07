@@ -7,12 +7,17 @@ import firebase_admin
 from firebase_admin import auth as firebase_auth
 import pyrebase
 
+from app.utils import get_secret
+
 # Initialize Firebase Admin SDK for Authentication
-firebase_keyfile = os.getenv("FIREBASE_SERVICE_ACCOUNT_KEY_FILE")
+project_id = os.getenv("GOOGLE_CLOUD_PROJECT")
+firebase_keyfile = json.loads(
+    get_secret(project_id, "FIREBASE_SERVICE_ACCOUNT_KEY_FILE")
+)
 if not firebase_admin._apps:
     firebase_cred = firebase_admin.credentials.Certificate(firebase_keyfile)
     firebase_admin.initialize_app(firebase_cred)
-firebase_config = json.load(open(os.getenv("FIREBASE_CONFIG_FILE"), "r"))
+firebase_config = json.loads(get_secret(project_id, "FIREBASE_CONFIG_FILE"))
 firebase = pyrebase.initialize_app(firebase_config)
 
 

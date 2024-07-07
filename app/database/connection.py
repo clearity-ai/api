@@ -5,13 +5,15 @@ from google.cloud.sql.connector import Connector, IPTypes
 import pg8000
 
 from app.models.user import User
+from app.utils import get_secret
 
 import pdb
 
 # Define Cloud SQL connection variables
 db_instance_connection_name = os.getenv("DB_INSTANCE_CONNECTION_NAME")
 db_user = os.getenv("DB_USER")
-db_pass = os.getenv("DB_PASSWORD")
+project_id = os.getenv("GOOGLE_CLOUD_PROJECT")
+db_pass = get_secret(project_id, "DB_PASSWORD")
 db_name = os.getenv("DB_NAME")
 ip_type = IPTypes.PUBLIC
 
