@@ -31,11 +31,11 @@ storage_bucket = os.getenv("STORAGE_BUCKET")
 async def upload_image(
     image: UploadFile,
     experiment_id: int,
-    user_firebase_id: int = Depends(authenticate_user_credentials),
+    user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),
 ):
 
-    user = await get_records_by_field(user_firebase_id, "firebase_id", User, session)
+    user = await get_records_by_field(user_firebase_id, "id", User, session)
     user = user[0]
 
     experiment_record = await get_record(experiment_id, Experiment, session)
@@ -45,8 +45,8 @@ async def upload_image(
         }
 
     image_path = (
-        f"{user.id}/{experiment_id}/{image.filename}_"
-        f"{datetime.today().strftime('%Y-%m-%d')}"
+        f"{user.id}/{experiment_id}/{'.'.join(image.filename.split('.')[:-1])}_"
+        f"{datetime.today().strftime('%Y-%m-%d')}.{image.filename.split('.')[-1]}"
     )
 
     await upload_file_to_object_storage(
@@ -74,7 +74,7 @@ async def upload_image(
 )
 async def retrieve_experiment_images(
     experiment_id: int,
-    user_firebase_id: int = Depends(authenticate_user_credentials),
+    user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),
 ):
     """Function which only returns the image paths and storage buckets."""
@@ -88,6 +88,7 @@ async def retrieve_experiment_images(
             image_record.storage_bucket,
             image_record.image_path,
             f"image/{image_record.image_format}",
+            image_record.segmask_path,
         )
         for image_record in image_records
         if not image_record.deleted

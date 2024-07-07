@@ -92,11 +92,11 @@ async def get_all_experiments_for_user(
 )
 async def create_experiment(
     experiment_data: ExperimentData,
-    user_firebase_id: int = Depends(authenticate_user_credentials),
+    user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),
 ):
 
-    user = await get_records_by_field(user_firebase_id, "firebase_id", User, session)
+    user = await get_records_by_field(user_firebase_id, "id", User, session)
     user = user[0]
 
     # Check that user doesn't have experiment of the same name
@@ -171,11 +171,11 @@ async def create_experiment(
 @experiment_router.put("/experiment/end", response_model=ResponseModel)
 async def end_experiment(
     experiment_id: int,
-    user_firebase_id: int = Depends(authenticate_user_credentials),
+    user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),
 ):
 
-    user = await get_records_by_field(user_firebase_id, "firebase_id", User, session)
+    user = await get_records_by_field(user_firebase_id, "id", User, session)
     user = user[0]
 
     experiment_record = await get_record(experiment_id, Experiment, session)
@@ -196,12 +196,12 @@ async def end_experiment(
 @experiment_router.put("/experiment/remove", response_model=ResponseModel)
 async def remove_experiment(
     experiment_id: int,
-    user_firebase_id: int = Depends(authenticate_user_credentials),
+    user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),
 ):
     """Set the deleted column of the experiment record with the given experiment_id to True."""
 
-    user = await get_records_by_field(user_firebase_id, "firebase_id", User, session)
+    user = await get_records_by_field(user_firebase_id, "id", User, session)
     user = user[0]
 
     experiment_record = await get_record(experiment_id, Experiment, session)

@@ -35,10 +35,10 @@ storage_bucket = os.getenv("STORAGE_BUCKET")
 )
 async def segment_image(
     image_id: int,
-    user_firebase_id: int = Depends(authenticate_user_credentials),
+    user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),
 ):
-    user = await get_records_by_field(user_firebase_id, "firebase_id", User, session)
+    user = await get_records_by_field(user_firebase_id, "id", User, session)
     user = user[0]
 
     image_record = await get_record(image_id, ProgressImage, session)
@@ -57,20 +57,24 @@ async def segment_image(
     image = utils.transform_image(image)
     image = image.to(device)
 
-    # TODO: server crashes when trying to segment image. device is cpu.
-    # Memory error? No docker 287.9MB / 7.58GB
     segmask = utils.segment_image(image, segmentation_model)
     segmask_path = (
         f"{image_record.image_path.split('_')[0]}"
-        "_mask.csv"
+        "_mask_"
         f"{datetime.today().strftime('%Y-%m-%d')}"
+        ".csv"  # Or whatever format is appropriate
     )
 
-    await upload_segmentation_mask(segmask, segmask_path, storage_bucket)
+    # TODO: upload segmentation mask to object storage
+    # await upload_segmentation_mask(segmask, segmask_path, storage_bucket)
 
-    image_record.segmask_path = segmask_path
-    await update_record(image_id, ProgressImage, image_record, session)
+    # image_record.segmask_path = segmask_path
+    # await update_record(image_id, ProgressImage, image_record, session)
+
+    # return {
+    #     "message": f"Image segmented successfully and segmentation mask stored at {segmask_path} ."
+    # }
 
     return {
-        "message": f"Image segmented successfully and segmentation mask stored at {segmask_path} ."
+        "message": "Image segmented successfully but mask storage not implemented yet."
     }

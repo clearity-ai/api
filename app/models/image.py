@@ -13,7 +13,7 @@ class ImageFormat(str, Enum):
 class ProgressImage(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     experiment_id: Optional[int] = Field(default=None, foreign_key="experiment.id")
-    user_id: Optional[int] = Field(default=None, foreign_key="user.id")
+    user_id: Optional[str] = Field(default=None, foreign_key="user.id")
     storage_bucket: str
     image_path: str
     segmask_path: Optional[str] = None

@@ -6,7 +6,7 @@ from enum import Enum
 
 class Experiment(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    user_id: Optional[int] = Field(default=None, foreign_key="user.id")
+    user_id: Optional[str] = Field(default=None, foreign_key="user.id")
     name: str
     date_started: date = datetime.today().strftime("%Y-%m-%d")
     date_ended: Optional[date] = None

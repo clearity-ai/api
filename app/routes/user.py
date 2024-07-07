@@ -33,7 +33,7 @@ async def signup_user(user_data: UserSignup, session=Depends(get_session)) -> di
         )
 
         user = User(
-            firebase_id=firebase_user.uid,
+            id=firebase_user.uid,
             email=user_data.email,
             username=user_data.username,
             sex=user_data.sex,
@@ -59,9 +59,8 @@ async def singin_user(user_data: UserSignin, session=Depends(get_session)) -> di
         )  # Caution: Not the same datatype as in signup function
         firebase_token = firebase_user["idToken"]
 
-        user = await get_records_by_field(
-            firebase_user["localId"], "firebase_id", User, session
-        )
+        user = await get_records_by_field(firebase_user["localId"], "id", User, session)
+
         user = user[0]
         assert user.email == user_data.email, "Major error in user authentication."
 
@@ -75,11 +74,10 @@ async def singin_user(user_data: UserSignin, session=Depends(get_session)) -> di
 
 @user_router.get("/user/get", response_model=ResponseOneUser)
 async def retrieve_user(
-    user_firebase_id: int = Depends(authenticate_user_credentials),
+    user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),
 ) -> dict:
-
-    user = await get_records_by_field(user_firebase_id, "firebase_id", User, session)
+    user = await get_records_by_field(user_firebase_id, "id", User, session)
     user = user[0]
     return {"data": user}
 
@@ -87,21 +85,23 @@ async def retrieve_user(
 @user_router.put("/user/", response_model=ResponseOneUser)
 async def update_user(
     updated_user: UserUpdate,
-    user_firebase_id: int = Depends(authenticate_user_credentials),
+    user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),
 ) -> dict:
-    user = await get_records_by_field(user_firebase_id, "firebase_id", User, session)
+
+    user = await get_records_by_field(user_firebase_id, "id", User, session)
     user = user[0]
+
     record = await update_record(user.id, User, updated_user, session)
     return {"message": "User sucessfully updated!", "data": record}
 
 
 @user_router.delete("/user/", response_model=ResponseModel)
 async def delete_user(
-    user_firebase_id: int = Depends(authenticate_user_credentials),
+    user_firebase_id: str = Depends(authenticate_user_credentials),
     session=Depends(get_session),
 ) -> dict:
-    user = await get_records_by_field(user_firebase_id, "firebase_id", User, session)
+    user = await get_records_by_field(user_firebase_id, "id", User, session)
     user = user[0]
     await delete_record(user.id, User, session)
     return {"message": "User successfully deleted!"}

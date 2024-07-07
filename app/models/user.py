@@ -17,13 +17,12 @@ class UserSignup(UserSignin):
 class User(SQLModel, table=True):
     # ID is optional in our code but will always be created when saved to the db
     # (https://sqlmodel.tiangolo.com/tutorial/create-db-and-table/)
-    id: Optional[int] = Field(default=None, primary_key=True)
-    firebase_id: Optional[str]
+    id: Optional[str] = Field(default=None, primary_key=True)
     email: str
     username: str
     sex: str
     birthdate: date
-    date_created: date = datetime.today().strftime("%Y-%m-%d")
+    date_created: Optional[date] = datetime.today().strftime("%Y-%m-%d")
     date_deleted: Optional[date] = None
 
     class Config:
