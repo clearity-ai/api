@@ -15,8 +15,6 @@ if not firebase_admin._apps:
 firebase_config = json.load(open(os.getenv("FIREBASE_CONFIG_FILE"), "r"))
 firebase = pyrebase.initialize_app(firebase_config)
 
-import pdb
-
 
 async def authenticate_user_credentials(
     cred: HTTPAuthorizationCredentials = Depends(HTTPBearer(auto_error=False)),
