@@ -10,7 +10,7 @@ from app.routes.ai import ai_router
 app = FastAPI()
 
 # Register origins (allowed to access API)
-origins = ["*"]
+origins = ["http://localhost:8081/"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
