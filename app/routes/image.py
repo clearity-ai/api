@@ -20,7 +20,7 @@ from app.models.user import User
 
 image_router = APIRouter(tags=["Images"])
 
-storage_bucket = os.getenv("STORAGE_BUCKET")
+storage_bucket = os.getenv("STORAGE_BUCKET_ROUTINE_SELFIES")
 
 
 @image_router.post(

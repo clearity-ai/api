@@ -25,7 +25,7 @@ segmentation_model = load_model(SkinSegmentationNN, "app/ai/models/model")
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 segmentation_model.to(device)
 
-storage_bucket = os.getenv("STORAGE_BUCKET")
+storage_bucket = os.getenv("STORAGE_BUCKET_ROUTINE_SELFIES")
 
 
 @ai_router.post(
