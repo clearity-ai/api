@@ -10,7 +10,7 @@ from app.routes.ai import ai_router
 app = FastAPI()
 
 # Register origins (allowed to access API)
-origins = ["http://localhost:8081/"]
+origins = ["http://localhost:8081"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -24,6 +24,11 @@ app.add_middleware(
 @app.get("/")
 async def welcome() -> dict:
     return {"message": "Welcome to the SkinAssist API!"}
+
+
+@app.get("/test-cors/")
+async def test_cors() -> dict:
+    return {"message": "CORS is working!"}
 
 
 # Register Routes
