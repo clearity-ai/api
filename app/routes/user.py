@@ -67,12 +67,15 @@ async def signup_user(
             status_code=400, detail="User with this email already exists."
         )
 
-    profile_picture_path = (
-        f"{firebase_user.uid}/profile_picture/{profile_picture.filename}"
-    )
-    await upload_file_to_object_storage(
-        profile_picture, profile_picture_path, storage_bucket=storage_bucket
-    )
+    if profile_picture is None:
+        profile_picture_path = None
+    else:
+        profile_picture_path = (
+            f"{firebase_user.uid}/profile_picture/{profile_picture.filename}"
+        )
+        await upload_file_to_object_storage(
+            profile_picture, profile_picture_path, storage_bucket=storage_bucket
+        )
 
     user = User(
         id=firebase_user.uid,
