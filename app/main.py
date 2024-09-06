@@ -5,7 +5,8 @@ from app.database.connection import connect_to_db
 from app.routes.user import user_router
 from app.routes.experiment import experiment_router
 from app.routes.image import image_router
-from app.routes.ai import ai_router
+
+# from app.routes.ai import ai_router
 
 app = FastAPI()
 
@@ -30,7 +31,7 @@ async def welcome() -> dict:
 app.include_router(user_router)
 app.include_router(experiment_router)
 app.include_router(image_router)
-app.include_router(ai_router)
+# app.include_router(ai_router)
 
 
 # Define Actions on Startup

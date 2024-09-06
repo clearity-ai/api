@@ -20,12 +20,12 @@ from app.models.user import User
 import pdb
 
 ai_router = APIRouter(tags=["AI"])
-
+"""
 segmentation_model = load_model(SkinSegmentationNN, "app/ai/models/model")
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 segmentation_model.to(device)
 
-storage_bucket = os.getenv("STORAGE_BUCKET_ROUTINE_SELFIES")
+storage_bucket = os.getenv("STORAGE_BUCKET_CHECKIN")
 
 
 @ai_router.post(
@@ -78,3 +78,4 @@ async def segment_image(
     return {
         "message": "Image segmented successfully but mask storage not implemented yet."
     }
+"""
