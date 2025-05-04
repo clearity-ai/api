@@ -59,9 +59,6 @@ def segment_image(input_image, seg_model):
     inputs = input_image.unsqueeze(0)
     inputs = inputs.to(device)
 
-    pdb.set_trace()
-
-    # TODO: server crashes when trying to segment image. device is cpu. Memory error? No docker 287.9MB / 7.58GB
     with torch.no_grad():
         seg_probabilities = seg_model.forward(inputs)
 
